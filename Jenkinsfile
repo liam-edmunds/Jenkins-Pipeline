@@ -45,7 +45,7 @@ pipeline{
                 echo "Code is deployed to production environment: $PRODUCTION_ENVIRONMENT"
             }
         }
-        stage('Completed'){
+        stage('Poll Test'){
             steps{
                 echo "Completed."
             }
