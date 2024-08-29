@@ -10,6 +10,11 @@ pipeline{
             steps{
                 echo "Fetch the source code from the directory path specified by the environment variable"
             }
+            post{
+                always{
+                    mail to: "liamtedmunds@gmail.com",
+                    subject: "Build Status Email",
+                    body: "Build log attached!"
         }
         stage('Test'){
             steps{
