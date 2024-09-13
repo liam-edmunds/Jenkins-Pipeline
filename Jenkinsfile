@@ -14,11 +14,14 @@ pipeline {
             post {
                 always {
                     script {
+                        def logFile = "${env.WORKSPACE}/test-stage-log.txt"
+                        sh "echo '${currentBuild.rawBuild.getLog(1000).join("\n")}' > ${logFile}"
                         def status = currentBuild.currentResult
-                        mail to: "liamtedmunds@gmail.com",
-                             subject: "Test Stage Status: ${status}",
-                             body: "The Unit and Integration Tests stage has finished with status: ${status}. Check the attached logs for more details.",
-                             attachLog: true
+                        emailext attachLog: false,
+                                 attachmentsPattern: 'test-stage-log.txt',
+                                 to: 'liamtedmunds@gmail.com',
+                                 subject: "Test Stage Status: ${status}",
+                                 body: "The Unit and Integration Tests stage has finished with status: ${status}. Check the attached logs for more details."
                     }
                 }
             }
@@ -37,11 +40,14 @@ pipeline {
             post {
                 always {
                     script {
+                        def logFile = "${env.WORKSPACE}/security-scan-log.txt"
+                        sh "echo '${currentBuild.rawBuild.getLog(1000).join("\n")}' > ${logFile}"
                         def status = currentBuild.currentResult
-                        mail to: "liamtedmunds@gmail.com",
-                             subject: "Security Scan Status: ${status}",
-                             body: "The Security Scan stage has finished with status: ${status}. Check the attached logs for more details.",
-                             attachLog: true
+                        emailext attachLog: false,
+                                 attachmentsPattern: 'security-scan-log.txt',
+                                 to: 'liamtedmunds@gmail.com',
+                                 subject: "Security Scan Status: ${status}",
+                                 body: "The Security Scan stage has finished with status: ${status}. Check the attached logs for more details."
                     }
                 }
             }
